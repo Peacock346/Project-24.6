@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 1.2rem;
+      width: 80px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #fff;
+      color: #0077b6;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #90e0ef;
+    }
+    .message {
+      font-size: 1.3rem;
+      margin-top: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guess the Number!</h1>
+  <p>I'm thinking of a number between 1 and 100.</p>
+  <input type="number" id="guessInput" min="1" max="100" />
+  <button onclick="checkGuess()">Guess</button>
+  <p class="message" id="message"></p>
+  <button id="restartBtn" class="hidden" onclick="restartGame()">Play Again</button>
+
+  <script>
+    let secretNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    function checkGuess() {
+      const userGuess = Number(document.getElementById("guessInput").value);
+      const message = document.getElementById("message");
+
+      if (!userGuess || userGuess < 1 || userGuess > 100) {
+        message.textContent = "Please enter a number between 1 and 100.";
+        return;
+      }
+
+      attempts++;
+
+      if (userGuess === secretNumber) {
+        message.textContent = `🎉 You got it in ${attempts} tries! The number was ${secretNumber}.`;
+        document.getElementById("restartBtn").classList.remove("hidden");
+      } else if (userGuess < secretNumber) {
+        message.textContent = "Too low! Try again.";
+      } else {
+        message.textContent = "Too high! Try again.";
+      }
+    }
+
+    function restartGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      document.getElementById("message").textContent = "";
+      document.getElementById("guessInput").value = "";
+      document.getElementById("restartBtn").classList.add("hidden");
+    }
+  </script>
+</body>
+<a href="scratchpage.html">Go Back to my Scratch Page</a>
+</html>
